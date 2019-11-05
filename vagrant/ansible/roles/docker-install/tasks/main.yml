@@ -1,0 +1,48 @@
+---
+- name: install docker
+  yum:
+    name='docker'
+    state=latest
+
+- name: service docker
+  service:
+    name=docker
+    state=started
+    enabled=yes
+
+- name: check to see if pip is already installed
+  command: "pip --version"
+  ignore_errors: true
+  register: pip_is_installed
+  changed_when: false
+
+- block:
+
+    - name: download get-pip.py
+      get_url: url=https://bootstrap.pypa.io/get-pip.py  dest=/tmp
+
+    - name: install pip
+      command: "python /tmp/get-pip.py"
+
+    - name: delete get-pip.py
+      file: state=absent path=/tmp/get-pip.py
+
+  when: pip_is_installed.rc != 0
+
+- name: install certain python modules for docker
+  pip:
+    name: "{{item.name}}"
+    version: "{{item.version}}"
+    state: present
+  with_items:
+    - { name: docker, version: 3.7.2 }
+    - { name: docker-compose, version: 1.24.0 }
+
+- name: Enable service docker
+  service:
+    name: docker
+    enabled: yes
+
+- name: Create docker network vagrant
+  docker_network:
+      name: vagrant

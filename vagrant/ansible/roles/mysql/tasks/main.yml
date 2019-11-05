@@ -1,0 +1,16 @@
+- include: directory.yml
+- include: common.yml
+
+- name: Copy docker and repl scripts
+  template:
+    src: "{{item}}"
+    dest: "/vagrant/mysql-master/"
+    owner: dev-user
+    group: dev-user
+  with_fileglob:
+        - "../../../docker/docker-compose.yml"
+        - "../../../docker/mysql_connector.sh"
+
+- name: run the service defined in docker-compose.yml
+  docker_compose:
+    project_src: /vagrant/mysql-master/

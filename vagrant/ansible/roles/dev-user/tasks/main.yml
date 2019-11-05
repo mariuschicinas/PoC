@@ -1,0 +1,9 @@
+- name: Check for dev-user
+  changed_when: false
+  shell: "grep dev-user /etc/passwd | cat "
+  register: add_dev_user
+  ignore_errors: true
+  check_mode: no
+
+- include: add-user.yml
+  when: add_dev_user.stdout == ''
