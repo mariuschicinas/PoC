@@ -1,0 +1,17 @@
+- name: Creates directory mysql slave conf
+  file:
+    path: /vagrant/mysql-slave/conf/etc/mysql/conf.d
+    state: directory
+    owner: dev-user
+    group: dev-user
+    mode: 0775
+    recurse: yes
+
+- name: Creates directory mysql slave shared
+  file:
+    path: /vagrant/mysql-slave/shared
+    state: directory
+    owner: dev-user
+    group: dev-user
+    mode: 0775
+    recurse: yes

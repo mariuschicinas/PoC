@@ -1,0 +1,8 @@
+- name: Copy scripts mysql slave
+  template:
+    src: "{{item}}"
+    dest: "/vagrant/mysql-slave/conf/etc/mysql/conf.d"
+    owner: dev-user
+    group: dev-user
+  with_fileglob:
+        - "../../../docker/mysql-slave/conf/common/etc/mysql/conf.d/*"
