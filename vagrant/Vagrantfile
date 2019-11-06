@@ -3,36 +3,36 @@
 Vagrant.configure("2") do |config|
   config.hostmanager.enabled = true
   config.hostmanager.manage_guest = true
-  config.vm.define "mysqlmaster" do |mysqlmaster|
+  config.vm.define "redisprime" do |redisprime|
      mysqlmaster.vm.box = "centos/7"
-     mysqlmaster.vm.hostname = "mysqlmaster"
-     mysqlmaster.vm.network "private_network", ip: "192.168.33.50", virtualbox__intnet: true
-     mysqlmaster.hostmanager.aliases = %w(mysqlmaster mysqlmaster)
+     mysqlmaster.vm.hostname = "redisprime"
+     mysqlmaster.vm.network "private_network", ip: "192.168.33.60", virtualbox__intnet: true
+     mysqlmaster.hostmanager.aliases = %w(redisprime redissecond)
      mysqlmaster.vm.provision :ansible do |ansible|
-        ansible.playbook = "ansible/playbooks/mysqlmaster.yml"
+        ansible.playbook = "ansible/playbooks/redis-prime.yml"
      end
   end
 
   config.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.cpus = "2"
-      vb.memory = "1024"
+      vb.cpus = "1"
+      vb.memory = "512"
   end
 
-  config.vm.define "mysqlslave" do |mysqlslave|
+  config.vm.define "redissecond" do |mysqlslave|
      mysqlslave.vm.box = "centos/7"
-     mysqlslave.vm.hostname = "mysqlslave.local"
-     mysqlslave.vm.network "private_network", ip: "192.168.33.51", virtualbox__intnet: true
-     mysqlslave.hostmanager.aliases = %w(mysqlslave mysqlmaster)
+     mysqlslave.vm.hostname = "redissecond"
+     mysqlslave.vm.network "private_network", ip: "192.168.33.61", virtualbox__intnet: true
+     mysqlslave.hostmanager.aliases = %w(redisprime redissecond)
      mysqlslave.vm.provision :ansible do |ansible|
-        ansible.playbook = "ansible/playbooks/mysqlslave.yml"
+        ansible.playbook = "ansible/playbooks/redis-second.yml"
      end
   end
 
   config.vm.provider "virtualbox" do |vb|
      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-     vb.cpus = "2"
-     vb.memory = "1024"
+     vb.cpus = "1"
+     vb.memory = "512"
   end
 
 end

@@ -1,0 +1,15 @@
+- include: directory.yml
+- include: common.yml
+
+- name: Copy docker and repl scripts
+  template:
+    src: "{{item}}"
+    dest: "/vagrant/redis/"
+    owner: dev-user
+    group: dev-user
+  with_fileglob:
+        - "../../../docker/redis/docker-compose.yml"
+
+- name: run the service defined in docker-compose.yml
+  docker_compose:
+    project_src: /vagrant/redis/

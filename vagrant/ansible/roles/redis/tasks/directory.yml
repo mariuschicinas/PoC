@@ -1,0 +1,8 @@
+- name: Creates config directory for redis
+  file:
+    path: /vagrant/redis/conf/etc
+    state: directory
+    owner: dev-user
+    group: dev-user
+    mode: 0775
+    recurse: yes

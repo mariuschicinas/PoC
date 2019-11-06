@@ -1,0 +1,8 @@
+- name: Copy scripts mysql master
+  template:
+    src: "{{item}}"
+    dest: "/vagrant/redis/conf/etc/redis.conf"
+    owner: dev-user
+    group: dev-user
+  with_fileglob:
+        - "../../../docker/redis/conf/common/etc/redis.conf"
