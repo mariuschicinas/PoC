@@ -1,8 +1,0 @@
-- hosts: node3
-  become: true
-
-  vars:
-    initredis: true
-
-  roles:
-    - role: ../roles/redis
