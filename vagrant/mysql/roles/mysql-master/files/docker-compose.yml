@@ -6,10 +6,6 @@ services:
     hostname: mysqlmaster
     privileged: true
     restart: on-failure
-    # networks:
-    #   - default
-    # expose:
-    #   - "{{ mysql_port }}"
     ports:
       - 3306:3306
     ulimits:
@@ -29,8 +25,3 @@ volumes:
       type: none
       device: /vagrant/mysql/data
       o: bind
-#
-# networks:
-#   default:
-#     external:
-#       name: vagrant
