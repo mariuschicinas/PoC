@@ -1,0 +1,25 @@
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: 0775
+    recurse: yes
+  with_items:
+    - /vagrant/mysql/data
+    - /vagrant/mysql/conf
+
+- name: Copy docker-compose files and conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+  with_items:
+    - { src: 'conf/mysql.cnf',dest: '/vagrant/mysql/conf/mysql.cnf', owner: 'vagrant'}
+    - { src: 'docker-compose.yml',dest: '/vagrant/mysql/docker-compose.yml', owner: 'vagrant'}
+    - { src: 'env',dest: '/vagrant/mysql/.env', owner: 'vagrant'}
+
+- name: Run the service defined in docker-compose.yml
+  docker_compose:
+    project_src: /vagrant/mysql/

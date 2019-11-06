@@ -1,0 +1,27 @@
+- name: create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: 0775
+    recurse: yes
+  with_items:
+    - /vagrant/redis/conf
+
+- name: Copy docker-compose files and conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+  with_items:
+    - { src: 'conf/redis.conf',    dest: '/vagrant/redis/conf/redis.conf',    owner: 'vagrant'}
+    - { src: 'docker-compose.yml', dest: '/vagrant/redis/docker-compose.yml', owner: 'vagrant'}
+
+- name: run the service defined in docker-compose.yml
+  docker_compose:
+    project_src: /vagrant/redis/
+
+- name: Create redis cluster
+  command: "docker exec mysqlslave /bin/sh -x /tmp/mysql_connector.sh && ./tmp/mysql_connector.sh"
+  when: initredis is defined
