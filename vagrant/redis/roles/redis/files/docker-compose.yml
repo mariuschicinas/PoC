@@ -14,6 +14,7 @@ services:
       - 16379:16379
     volumes:
       - /vagrant/redis/conf/redis.conf:/etc/redis.conf
+      - /vagrant/redis/cluster.sh:/usr/local/bin/cluster.sh
     command: /etc/redis.conf
 
 

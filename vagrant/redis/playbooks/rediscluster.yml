@@ -1,0 +1,5 @@
+- hosts: node3
+  become: true
+
+  roles:
+    - role: ../roles/rediscluster

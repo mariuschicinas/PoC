@@ -1,0 +1,3 @@
+- name: Create redis cluster
+  command: "docker exec redis /bin/sh /usr/local/bin/cluster.sh"
+

@@ -8,6 +8,7 @@
     recurse: yes
   with_items:
     - /vagrant/redis/conf
+  when: initredis is not defined
 
 - name: Copy docker-compose files and conf
   copy:
@@ -18,8 +19,10 @@
     - { src: 'conf/redis.conf',    dest: '/vagrant/redis/conf/redis.conf',    owner: 'vagrant'}
     - { src: 'docker-compose.yml', dest: '/vagrant/redis/docker-compose.yml', owner: 'vagrant'}
     - { src: 'cluster.sh',         dest: '/vagrant/redis/cluster.sh',         owner: 'vagrant'}
+  when: initredis is not defined
 
 - name: run the service defined in docker-compose.yml
   docker_compose:
     project_src: /vagrant/redis/
+  when: initredis is not defined
 
