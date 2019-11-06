@@ -1,8 +1,0 @@
-- name: Copy scripts mysql master
-  template:
-    src: "{{item}}"
-    dest: "/vagrant/mysql-master/conf/etc/mysql/conf.d"
-    owner: dev-user
-    group: dev-user
-  with_fileglob:
-        - "../../../docker/mysql-master/conf/common/etc/mysql/conf.d/*"

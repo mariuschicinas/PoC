@@ -6,31 +6,31 @@ services:
     hostname: mysqlmaster
     privileged: true
     restart: on-failure
-    networks:
-      - default
-    expose:
-      - "3306"
+    # networks:
+    #   - default
+    # expose:
+    #   - "{{ mysql_port }}"
     ports:
-      - "3306:3306"
+      - 3306:3306
     ulimits:
       nofile:
-        soft: 1000000
-        hard: 1000000
+        soft: 10000
+        hard: 10000
     volumes:
-      - /vagrant/mysql-master/conf/etc/mysql/conf.d:/etc/mysql/conf.d
+      - /vagrant/mysql/conf:/etc/mysql/conf.d
       - mysql_datamaster:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=${MASTER_PASS}
 
 volumes:
   mysql_datamaster:
     driver: local
     driver_opts:
       type: none
-      device: /vagrant/mysql-master/shared
+      device: /vagrant/mysql/data
       o: bind
-
-networks:
-  default:
-    external:
-      name: vagrant
+#
+# networks:
+#   default:
+#     external:
+#       name: vagrant

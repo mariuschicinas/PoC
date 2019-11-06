@@ -1,0 +1,41 @@
+version: '3'
+services:
+  mysqlslave:
+    image: mysql:5.7
+    container_name: mysqlslave
+    hostname: mysqlslave
+    privileged: true
+    restart: on-failure
+    # networks:
+    #   - default
+    # expose:
+    #   - "{{ mysql_port }}"
+    ports:
+      - 3306:3306
+    ulimits:
+      nofile:
+        soft: 10000
+        hard: 10000
+    volumes:
+      - /vagrant/mysql/conf:/etc/mysql/conf.d
+      - mysql_dataslave:/var/lib/mysql
+      - /vagrant/mysql/mysql_connector.sh:/tmp/mysql_connector.sh
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SLAVE_PASS}
+      - MYSQL_SLAVE_PASSWORD=${SLAVE_PASS}
+      - MYSQL_MASTER_PASSWORD=${MASTER_PASS}
+      - MYSQL_REPLICATION_USER=${REPL_USER}
+      - MYSQL_REPLICATION_PASSWORD=${REPL_PASS}
+
+volumes:
+  mysql_dataslave:
+    driver: local
+    driver_opts:
+      type: none
+      device: /vagrant/mysql/data
+      o: bind
+#
+# networks:
+#   default:
+#     external:
+#       name: vagrant

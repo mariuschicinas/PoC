@@ -1,0 +1,11 @@
+- name: Add group "docker" for vagrant
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: Add vagrant to group docker
+  user:
+    name: 'vagrant'
+    groups: docker
+    append: yes

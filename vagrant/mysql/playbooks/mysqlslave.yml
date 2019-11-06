@@ -1,11 +1,8 @@
 - hosts: mysqlslave
   become: true
 
-  vars_files:
-    - ../group_vars/mysql.yml
-
   roles:
-    - role: ../roles/ops-tools
-    - role: ../roles/dev-user
+  #  - role: ../roles/ops-tools
+    - role: ../roles/vagrant
     - role: ../roles/docker-install
     - role: ../roles/mysql-slave
