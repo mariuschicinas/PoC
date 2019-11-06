@@ -21,12 +21,11 @@ services:
       - mysql_dataslave:/var/lib/mysql
       - /vagrant/mysql-slave/mysql_connector.sh:/tmp/mysql_connector.sh
     environment:
-      - MYSQL_SLAVE_PASSWORD=root
-      - MYSQL_MASTER_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_REPLICATION_USER=repl
-      - MYSQL_REPLICATION_PASSWORD=repl
-    command: /bin/sh -x /tmp/mysql_connector.sh && ./tmp/mysql_connector.sh
+      - "MYSQL_SLAVE_PASSWORD=root"
+      - "MYSQL_MASTER_PASSWORD=root"
+      - "MYSQL_REPLICATION_USER=repl"
+      - "MYSQL_REPLICATION_PASSWORD=repl"
 
 volumes:
   mysql_dataslave:

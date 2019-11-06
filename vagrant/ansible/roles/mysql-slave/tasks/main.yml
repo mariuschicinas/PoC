@@ -14,3 +14,6 @@
 - name: run the service defined in docker-compose.yml
   docker_compose:
     project_src: /vagrant/mysql-slave/
+
+- name: Execute shell for replication
+  shell: "docker exec mysqlslave /bin/sh -x /tmp/mysql_connector.sh && ./tmp/mysql_connector.sh"
