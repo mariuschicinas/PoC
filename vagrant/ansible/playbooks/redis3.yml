@@ -1,4 +1,4 @@
-- hosts: redisprime 
+- hosts: node3
   become: true
 
   vars_files:
