@@ -1,0 +1,35 @@
+- name: Check if EPEL repo is already configured.
+  stat: path={{ epel_repofile_path }}
+  register: epel_repofile_result
+
+- name: Install EPEL repo.
+  yum:
+    name: "{{ epel_repo_url }}"
+    state: present
+  register: result
+  when: not epel_repofile_result.stat.exists
+
+- name: Import EPEL GPG key.
+  rpm_key:
+    key: "{{ epel_repo_gpg_key_url }}"
+    state: present
+  when: not epel_repofile_result.stat.exists
+
+- name: install ops packages
+  yum:
+    name:
+      - htop.x86_64
+      - iotop
+      - mlocate
+      - strace
+      - unzip
+      - vim
+      - lsof
+      - sysstat
+      - telnet
+      - git
+      - net-tools
+    state: present
+
+- name: Change bashrc
+  copy: src=bashrc dest=/etc/bashrc

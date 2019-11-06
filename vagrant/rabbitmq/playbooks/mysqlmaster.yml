@@ -1,0 +1,8 @@
+- hosts: mysqlmaster
+  become: true
+
+  roles:
+  #  - role: ../roles/ops-tools
+    - role: ../roles/vagrant
+    - role: ../roles/docker-install
+    - role: ../roles/mysql-master
