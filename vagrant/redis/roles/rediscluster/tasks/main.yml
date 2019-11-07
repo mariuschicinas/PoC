@@ -1,3 +1,11 @@
+
+- name: wait for redis to come up
+  command: "docker exec redis /bin/sh -c 'redis-cli ping'"
+  register: result
+  until: result.stdout.find("PONG") != -1
+  retries: 60
+  delay: 1
+
 - name: Create redis cluster
   command: "docker exec redis /bin/sh /usr/local/bin/cluster.sh"
-
+  when: "ansible_hostname == 'node3'"

@@ -1,8 +1,8 @@
-- hosts: mysqlslave
+- hosts: all
   become: true
 
   roles:
-  #  - role: ../roles/ops-tools
     - role: ../roles/vagrant
     - role: ../roles/docker-install
-    - role: ../roles/mysql-slave
+    - role: ../roles/redis
+    - role: ../roles/rediscluster

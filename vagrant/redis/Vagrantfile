@@ -1,60 +1,23 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+NODES=3
+IP_PREFIX="10.10.0."
 Vagrant.configure("2") do |config|
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_guest = true
-  config.vm.define "mysqlmaster" do |mysqlmaster|
-     mysqlmaster.vm.box = "centos/7"
-     mysqlmaster.vm.hostname = "mysqlmaster"
-     mysqlmaster.vm.network "private_network", ip: "192.168.33.50", virtualbox__intnet: true
-     mysqlmaster.hostmanager.aliases = %w(mysqlmaster node1 redis1)
-     mysqlmaster.vm.provision "redis", type:'ansible' do |ansible|
-        ansible.playbook = "playbooks/redis1.yml"
-     end
+  (1..NODES).each do |i|
+    config.hostmanager.enabled = true
+    config.hostmanager.manage_guest = true
+    config.vm.define "node#{i}" do |node|
+      node.vm.box = "centos/7"
+      node.vm.network "private_network", ip: "#{IP_PREFIX}#{i+2}", virtualbox__intnet: true
+      node.hostmanager.aliases = %w("node#{i}" "node#{i}")
+      node.vm.hostname = "node#{i}"
+      # map ports to host ports (for testing purposes)
+      if i == NODES
+        node.vm.provision "ansible" do |ansible|
+          ansible.limit = "all"
+          ansible.playbook = "playbooks/redis.yml"
+        end
+      end
+    end
   end
-
-  config.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.cpus = "2"
-      vb.memory = "1024"
-  end
-
-  config.vm.define "mysqlslave" do |mysqlslave|
-     mysqlslave.vm.box = "centos/7"
-     mysqlslave.vm.hostname = "mysqlslave.local"
-     mysqlslave.vm.network "private_network", ip: "192.168.33.51", virtualbox__intnet: true
-     mysqlslave.hostmanager.aliases = %w(mysqlslave node2 redis2)
-     mysqlslave.vm.provision "redis", type:'ansible' do |ansible|
-        ansible.playbook = "playbooks/redis2.yml"
-     end
-  end
-
-  config.vm.provider "virtualbox" do |vb|
-     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-     vb.cpus = "2"
-     vb.memory = "1024"
-  end
-
-
-  config.vm.define "node3" do |node3|
-     node3.vm.box = "centos/7"
-     node3.vm.hostname = "node3"
-     node3.vm.network "private_network", ip: "192.168.33.52", virtualbox__intnet: true
-     node3.hostmanager.aliases = %w(node3 redis3)
-     
-     node3.vm.provision "redis", type:'ansible' do |ansible|
-        ansible.playbook = "playbooks/redis3.yml"
-     end
-     node3.vm.provision "rediscluster", type:'ansible' do |ansible|
-        ansible.playbook = "playbooks/rediscluster.yml"
-     end
-
-  end
-
-  config.vm.provider "virtualbox" do |vb|
-     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-     vb.cpus = "1"
-     vb.memory = "256"
-  end
-
 end
