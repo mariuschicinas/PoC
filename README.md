@@ -52,16 +52,17 @@ Just uncomment the line in the playbook
 
 # Rabbitmq cluster
 ### Usage:
-1. Vagrant file creates 3 hosts with names *rabbit1*, *rabbit2* and *rabbit3*. Every host will contains one docker container.
+1. Vagrantfile creates 3 hosts with names *rabbit1*, *rabbit2* and *rabbit3*. Every host will contains one docker container.
 2. Ansible playbook:  
-This time Ansible playbook installs *docker* from *Ansible galaxy*. Installs rabbitmq from image *rabbitmq:3-management*. Waits for all services to be present and starts the cluster.
+This time Ansible playbook installs *docker* from **Ansible galaxy**. Installs rabbitmq from image *rabbitmq:3-management*. Waits for all services to be present and starts the cluster.
 3. Run from folder *rabbitmq*:
     `vagrant up`
 4. Remove the hosts with `vagrant destroy -f`
 
 
 
-> To expose the management port to the browser is added **forwarded_port** in Vagrantfile. The user and the password are Ansible variables in /group_vars/user.yml. The access is
+> To expose the management port to the browser is added **forwarded_port** in Vagrantfile. 
+The user and the password are **Ansible variables** in ``/group_vars/user.yml``. The access is
 ``http://localhost:15672``
 
 ----
@@ -78,18 +79,11 @@ Ansible playbooks installs *docker* from image *mysql:5.7*. Creates folders for 
 
 
 > To test the replication:  
-
 List the current databases on mysqlmaster:  
  ``vagrant ssh mysqlmaster -c  "docker exec mysqlmaster mysql -proot -e 'show databases'"``  
- 
 Add new database  
-
 ``vagrant ssh mysqlmaster -c  "docker exec mysqlmaster mysql -proot -e 'create database test1'"``  
-
 Check the new database on second host:  
-
 ``vagrant ssh mysqlslave -c  "docker exec mysqlslave mysql -proot -e 'show databases'"``  
-
 Additionally check the status  
-
 ``vagrant ssh mysqlslave -c  "docker exec mysqlslave mysql -proot -e 'show slave status \G'"``
