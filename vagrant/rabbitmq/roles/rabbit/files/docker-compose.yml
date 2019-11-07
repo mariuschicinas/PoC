@@ -1,0 +1,22 @@
+version: "3"
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: ${HOSTNAME}
+    container_name: ${HOSTNAME}
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secretstring"
+      RABBITMQ_NODENAME: ${HOSTNAME}
+      # RABBITMQ_DEFAULT_USER: rabbituser
+      # RABBITMQ_DEFAULT_PASS: rabbitpass
+      # RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
+      - "./definitions.json:/etc/rabbitmq/definitions.json"
+    ports:
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "15671:15671"
+      - "15672:15672"
+      - "25672:25672"
