@@ -4,15 +4,16 @@ services:
     image: rabbitmq:3-management
     hostname: ${HOSTNAME}
     container_name: ${HOSTNAME}
+    privileged: true
     environment:
       RABBITMQ_ERLANG_COOKIE: "secretstring"
       RABBITMQ_NODENAME: ${HOSTNAME}
-      # RABBITMQ_DEFAULT_USER: rabbituser
-      # RABBITMQ_DEFAULT_PASS: rabbitpass
-      # RABBITMQ_DEFAULT_VHOST: /
-    volumes:
-      - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-      - "./definitions.json:/etc/rabbitmq/definitions.json"
+      RABBITMQ_DEFAULT_USER: rabbituser
+      RABBITMQ_DEFAULT_PASS: rabbitpass
+      RABBITMQ_DEFAULT_VHOST: /
+    # volumes:
+    #   - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
+    #   - "./definitions.json:/etc/rabbitmq/definitions.json"
     ports:
       - "4369:4369"
       - "5671:5671"
@@ -20,3 +21,7 @@ services:
       - "15671:15671"
       - "15672:15672"
       - "25672:25672"
+    extra_hosts:
+      - "rabbit1:10.10.0.3"
+      - "rabbit2:10.10.0.4"
+      - "rabbit3:10.10.0.4"

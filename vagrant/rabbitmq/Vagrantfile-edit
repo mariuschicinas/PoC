@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_guest = true
+  config.vm.define "rabbit1" do |rabbit1|
+     rabbit1.vm.box = "centos/7"
+     rabbit1.vm.hostname = "rabbit1"
+     rabbit1.vm.network "private_network", ip: "192.168.33.50", virtualbox__intnet: true
+     rabbit1.vm.network "forwarded_port", guest: 5672, host: "5672", auto_correct: true
+     rabbit1.vm.network "forwarded_port", guest: 15672, host: "15672", auto_correct: true
+     rabbit1.hostmanager.aliases = %w(rabbit1 rabbit1)
+     rabbit1.vm.provision :ansible do |ansible|
+       ansible.galaxy_role_file = "roles/galaxy.yml"
+       ansible.playbook = "playbooks/docker.yml"
+     end
+  end
+
+  config.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.cpus = "2"
+      vb.memory = "1024"
+  end
+
+  config.vm.define "rabbit2" do |rabbit2|
+     rabbit2.vm.box = "centos/7"
+     rabbit2.vm.hostname = "rabbit2"
+     rabbit2.vm.network "private_network", ip: "192.168.33.51", virtualbox__intnet: true
+     rabbit2.hostmanager.aliases = %w(rabbit2 rabbit2)
+     rabbit2.vm.provision :ansible do |ansible|
+       ansible.galaxy_role_file = "roles/galaxy.yml"
+       ansible.playbook = "playbooks/docker.yml"
+     end
+  end
+
+  config.vm.provider "virtualbox" do |vb|
+     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+     vb.cpus = "2"
+     vb.memory = "1024"
+  end
+
+end
