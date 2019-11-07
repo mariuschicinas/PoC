@@ -1,6 +1,8 @@
 - hosts: all
   become: true
 
+  vars_files:
+    - ../group_vars/user.yml
   vars:
     - docker_users:
       - vagrant

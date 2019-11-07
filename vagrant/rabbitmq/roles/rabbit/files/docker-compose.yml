@@ -2,14 +2,14 @@ version: "3"
 services:
   rabbit:
     image: rabbitmq:3-management
-    hostname: ${HOSTNAME}
-    container_name: ${HOSTNAME}
+    hostname: "{{ ansible_hostname }}"
+    container_name: "{{ ansible_hostname }}"
     privileged: true
     environment:
       RABBITMQ_ERLANG_COOKIE: "secretstring"
-      RABBITMQ_NODENAME: ${HOSTNAME}
-      RABBITMQ_DEFAULT_USER: rabbituser
-      RABBITMQ_DEFAULT_PASS: rabbitpass
+      RABBITMQ_NODENAME: "{{ ansible_hostname }}"
+      RABBITMQ_DEFAULT_USER: "{{ rabbituser }}"
+      RABBITMQ_DEFAULT_PASS: "{{ rabbitpass }}"
       RABBITMQ_DEFAULT_VHOST: /
     # volumes:
     #   - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
@@ -24,4 +24,4 @@ services:
     extra_hosts:
       - "rabbit1:10.10.0.3"
       - "rabbit2:10.10.0.4"
-      - "rabbit3:10.10.0.4"
+      - "rabbit3:10.10.0.5"

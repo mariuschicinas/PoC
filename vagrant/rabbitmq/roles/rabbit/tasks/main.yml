@@ -12,6 +12,15 @@
   docker_compose:
     project_src: /home/vagrant/
 
+- name: wait for rabbitmq to come up
+  uri:
+    url: "http://127.0.0.1:5672"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 1
+
 - name: stop rabbitmq app
   command: docker exec "{{ ansible_hostname }}" /bin/sh -c "rabbitmqctl stop_app"
   when: "ansible_hostname != 'rabbit1'"
