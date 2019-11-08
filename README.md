@@ -31,18 +31,27 @@ To run the all services install:
 4. Vagrant plugin [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager)
 5. VirtualBox for provider [Virtualbox download page](https://www.virtualbox.org/)
 ----
+### Notes:
+Because the clusters are POC , such as Redis ports and Mysql port are not open to the host. All containers are in separate VMs, because the meaning of the cluster is not just to repicate data but high availability and redundancy.
+The Vagrantfiles are separated for every stack, because the services want resources and will be very heavy for the system recuirements to have 8 running VMs.  
 
+For the clusters is used Virtualbox so they can be tested on local environment. All Vagrantfiles are with different configuration to expose different provisioning scenarios. It was not used docker network on purpose.  
+There are ansible roles from Ansible Galaxy just to show how they can be used. All custom roles contains only the nessessary folders.
+The Ansible is written with different tasks and modules to show how they can be used.
+For Redis cluster is added desibled role which can be used from DevOps engineers to debug and test easily with the Linux tools.
+For RabbitMQ is added additional file called "user.yml". There are defined user and the password for the rabbitmq management page. The idea is to have them separated and with ansible Vault can be secured.  
+For Mysql are used different Ansible playbooks to expose how can be with different provisioning scenarios.
+
+----
 # Redis cluster
 ### Usage:
-1. Vagrant file creates 3 hosts with names *node1*, *node2* and *node3*. Every host will contains one docker container.
+1. Vagrant file creates 3 hosts with names *node1*, *node2* and *node3*. 
 2. Ansible playbook:  
 Adds *vagrant* user to docker group. Installs *docker* on all hosts. Installs *redis* containers from *redis:5-alpine* with config files. Waits for all redis services to be ready and finally starts redis cluster.
 3. Run from folder *redis*:  
 `vagrant up`
 4. Remove the hosts with   
 `vagrant destroy -f`
-
-
 
 > Additionally there is a role called **ops-tools**. Contains some useful Linux tools like *htop*, *lsof*, *telnet* and more.   
 Also this role adds a great *bashrc*. 
@@ -53,7 +62,6 @@ Just uncomment the line in the playbook
 To test redis cluster, run this command from command line:
 ``vagrant ssh node1 -c "docker exec redis /bin/sh -c 'redis-cli cluster info'"``
 ----
-
 # Rabbitmq cluster
 ### Usage:
 1. Vagrantfile creates 3 hosts with names *rabbit1*, *rabbit2* and *rabbit3*. Every host will contains one docker container.
