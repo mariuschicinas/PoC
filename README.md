@@ -38,7 +38,7 @@ Because the clusters are POC , such as Redis ports and Mysql port are not open t
 The Vagrantfiles are separated for every stack, because the services want resources and will be very heavy for the system requirements to have 8 running VMs.  
 
 For the clusters is used Virtualbox so they can be tested on local environment. All Vagrantfiles are with different configuration to expose different provisioning scenarios. Docker network fo some of them was not used on purpose.  
-There are ansible roles from Ansible Galaxy just to show how they can be used. All custom roles contains only the nessessary folders.
+There are ansible roles from Ansible Galaxy just to show how they can be used. All custom roles contains only the necessary folders.
 The Ansible is written with different tasks and modules to show how they can be used.
 For Redis cluster is added desibled role which can be used from DevOps engineers to debug and test easily with the Linux tools.
 For RabbitMQ is added additional file called "user.yml". There are defined user and the password for the rabbitmq management page. The idea is to have them separated and with ansible Vault can be secured.  
