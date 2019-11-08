@@ -31,6 +31,7 @@ To run the all services install:
 3. Vagrant plugin: [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater)
 4. Vagrant plugin [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager)
 5. VirtualBox for provider [Virtualbox download page](https://www.virtualbox.org/)
+
 ----
 ### Notes:
 Because the clusters are POC , such as Redis ports and Mysql port are not open to the host. All containers are in separate VMs, because the meaning of the cluster is not just to repicate data but high availability and redundancy.
@@ -62,6 +63,7 @@ Just uncomment the line in the playbook
 
 To test redis cluster, run this command from command line:
 ``vagrant ssh node1 -c "docker exec redis /bin/sh -c 'redis-cli cluster info'"``
+
 ----
 # Rabbitmq cluster
 ### Usage:
