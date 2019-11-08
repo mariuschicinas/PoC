@@ -28,7 +28,7 @@ To run the all services install:
 1. Ansible [Ansible install doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html). Version used: 2.8.5
 2. Vagrant [Vagrant install page](https://www.vagrantup.com/downloads.html). Version used : 2.2.6
 3. Vagrant plugin: [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater)
-4. Vagrant plugin vagrant-hostmanager
+4. Vagrant plugin [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager)
 5. VirtualBox for provider [Virtualbox download page](https://www.virtualbox.org/)
 ----
 
