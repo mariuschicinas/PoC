@@ -21,6 +21,7 @@ After first playbook run, RabbitMQ cluster must be properly initialized. Managem
 
 MySQL replication
 Implement Ansible Playbook which deploys MySQL master and slave in Docker containers. First playbook run must result in replication process running with now errors. MySQL data directories must be persisted on hosts disk.
+
 ----
 ## Requirements
 To run the all services install:
