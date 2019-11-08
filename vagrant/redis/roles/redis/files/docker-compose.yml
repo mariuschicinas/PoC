@@ -15,7 +15,16 @@ services:
     volumes:
       - /vagrant/redis/conf/redis.conf:/etc/redis.conf
       - /vagrant/redis/cluster.sh:/usr/local/bin/cluster.sh
+      - redis-data:/data
     command: /etc/redis.conf
+
+volumes:
+  redis-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /vagrant/redis/data
+      o: bind
 
 
 networks:

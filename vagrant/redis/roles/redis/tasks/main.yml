@@ -8,6 +8,7 @@
     recurse: yes
   with_items:
     - /vagrant/redis/conf
+    - /vagrant/redis/data
 
 - name: Copy docker-compose files and conf
   copy:
@@ -22,4 +23,3 @@
 - name: run the service defined in docker-compose.yml
   docker_compose:
     project_src: /vagrant/redis/
-
