@@ -48,8 +48,10 @@ Adds *vagrant* user to docker group. Installs *docker* on all hosts. Installs *r
 Also this role adds a great *bashrc*. 
 ``roles:
     # - role:../roles/ops-tools``
-Just uncomment the line in the playbook
+Just uncomment the line in the playbook  
 
+To test redis cluster, run this command from command line:
+``vagrant ssh node1 -c "docker exec redis /bin/sh -c 'redis-cli cluster info'"``
 ----
 
 # Rabbitmq cluster
