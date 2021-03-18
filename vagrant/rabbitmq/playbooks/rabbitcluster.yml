@@ -6,12 +6,7 @@
   vars:
     - docker_users:
       - vagrant
-    - pip_install_packages:
-      - docker
-      - docker-compose
 
   roles:
-    - geerlingguy.repo-epel
-    - geerlingguy.docker
-    - geerlingguy.pip
+    - ../roles/docker-install
     - ../roles/rabbit

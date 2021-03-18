@@ -20,8 +20,7 @@ Vagrant.configure("2") do |config|
       if i == NODES
         node.vm.provision "ansible" do |ansible|
           ansible.limit = "all"
-          ansible.galaxy_role_file = "roles/galaxy.yml"
-          ansible.playbook = "playbooks/docker.yml"
+          ansible.playbook = "playbooks/rabbitcluster.yml"
         end
       end
     end

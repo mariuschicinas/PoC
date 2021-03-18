@@ -19,7 +19,7 @@
 - block:
 
     - name: download get-pip.py
-      get_url: url=https://bootstrap.pypa.io/get-pip.py  dest=/tmp
+      get_url: url=https://bootstrap.pypa.io/pip/2.7/get-pip.py  dest=/tmp
 
     - name: install pip
       command: "python /tmp/get-pip.py"
